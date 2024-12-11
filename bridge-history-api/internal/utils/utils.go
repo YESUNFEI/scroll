@@ -172,13 +172,14 @@ func GetBlocksInRange(ctx context.Context, cli *ethclient.Client, start, end uin
 
 // ConvertBigIntArrayToString convert the big int array to string
 func ConvertBigIntArrayToString(array []*big.Int) string {
-	stringArray := make([]string, len(array))
+	var sb strings.Builder
 	for i, num := range array {
-		stringArray[i] = num.String()
+		if i > 0 {
+			sb.WriteString(", ")
+		}
+		sb.WriteString(num.String())
 	}
-
-	result := strings.Join(stringArray, ", ")
-	return result
+	return sb.String()
 }
 
 // ConvertStringToStringArray takes a string with values separated by commas and returns a slice of strings
